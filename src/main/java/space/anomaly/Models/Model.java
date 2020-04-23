@@ -14,6 +14,7 @@ public abstract class Model {
 
     public List<Double> xList = new ArrayList<Double>();
     public List<Double> yList = new ArrayList<Double>();
+    public List<Double> thetaList = new ArrayList<Double>();
 
     public Model(){}
 
@@ -24,6 +25,7 @@ public abstract class Model {
     public void run() throws InterruptedException {
         xList.add(model_x);
         yList.add(model_y);
+        thetaList.add(model_theta);
         MessageHandler.sendToConsole(new Message(this.toString()));
         Thread.sleep(loopTime);
     }

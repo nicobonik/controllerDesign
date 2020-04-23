@@ -8,6 +8,11 @@ public class BoundingBox extends Controller {
 
     public BoundingBox(){}
 
+    @Override
+    public void run() throws InterruptedException {
 
 
+
+        super.run();
+    }
 }

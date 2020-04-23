@@ -1,15 +1,29 @@
 package space.anomaly.Controllers;
 
-import space.anomaly.Models.Model;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
 
 public abstract class Controller {
-    public Model model;
 
-    public Controller() {
-    }
+    XYChart chart;
 
-    public void run() throws InterruptedException {
-        model.run();
+    public Controller() {}
+
+    public void run() throws InterruptedException {}
+
+    /**
+     * default graphing options
+     */
+    public void graph() {
+        chart  = new XYChartBuilder().build();
+        chart.setTitle("Robot Position");
+        chart.setXAxisTitle("X");
+        chart.setYAxisTitle("Y");
+        chart.getStyler().setYAxisMin(-10.0);
+        chart.getStyler().setYAxisMax(10.0);
+        chart.getStyler().setXAxisMin(-10.0);
+        chart.getStyler().setXAxisMax(10.0);
+
     }
 
 }

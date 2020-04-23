@@ -1,5 +1,7 @@
 package space.anomaly.Math;
 
+import java.util.ArrayList;
+
 public class Point {
     public double x;
     public double y;
@@ -12,6 +14,28 @@ public class Point {
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static ArrayList<Double> toXList(ArrayList<Point> points) {
+        ArrayList<Double> values = new ArrayList<Double>();
+
+        for (Point p : points) {
+            values.add(p.x);
+        }
+
+        return values;
+
+    }
+
+    public static ArrayList<Double> toYList(ArrayList<Point> points) {
+        ArrayList<Double> values = new ArrayList<Double>();
+
+        for (Point p : points) {
+            values.add(p.y);
+        }
+
+        return values;
+
     }
 
 }

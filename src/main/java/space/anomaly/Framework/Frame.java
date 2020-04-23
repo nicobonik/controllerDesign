@@ -9,7 +9,7 @@ public class Frame {
         DifferentialGoToGoal controller = new DifferentialGoToGoal(-4, -6);
 
         int i = 0;
-        while(Math.abs((controller.model.model_x - controller.x)) + Math.abs((controller.model.model_y - controller.y)) > 0.1 || i > 5000){
+        while(Math.abs((controller.model.model_x - controller.x)) + Math.abs((controller.model.model_y - controller.y)) > 0.1 || i > 9000){
             controller.run();
 
             i++;

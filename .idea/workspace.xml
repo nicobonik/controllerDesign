@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c8d3bb5-de79-4e77-89ff-955125c558de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/GoToGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/PID.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Math/MathFunctions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Math/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Differential.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/DifferentialGoToGoal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/BaseController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/BoundingBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/BoundingBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Controllers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Framework/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Framework/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Unicycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Unicycle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Differential.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/space/anomaly/Models/Differential.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +34,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="space.anomaly.Framework" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Frame">
     <configuration name="ChartTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -115,22 +112,22 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1587540145831" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1587612329250">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1587627898287">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1587612329250" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1587612329248">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1587627898287" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1587627898283">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1587612329248" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1587612329247">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1587627898283" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1587627898282">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1587612329247" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1587612329249">
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1587627898282" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1587627898285">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1587612329249" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1587627898285" />
     <state x="229" y="89" key="SettingsEditor" timestamp="1587593758213">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

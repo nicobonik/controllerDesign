@@ -5,8 +5,6 @@ import static java.lang.Math.*;
 public class Differential extends Model {
     public double radius = 1.0;
     public double wheelBase = 1.0;
-    public double vl = 0;
-    public double vr = 0;
 
     public Differential(){
         model_x = 0;
@@ -25,9 +23,9 @@ public class Differential extends Model {
 
     public void run(double left, double right) throws InterruptedException {
 
-        double v = (radius / 2) * (vl + vr);
+        double v = (radius / 2) * (left + right);
 
-        double w = (radius / wheelBase) * (vr - vl);
+        double w = (radius / wheelBase) * (left - right);
 
         v = clip(v, -1.0, 1.0);
         w = clip(w, -1.0, 1.0);
@@ -39,8 +37,6 @@ public class Differential extends Model {
         model_y += v * sin(model_theta);
 
         model_theta += w;
-
-
 
         super.run();
     }

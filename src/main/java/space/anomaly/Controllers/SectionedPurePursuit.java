@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurePursuit extends Controller {
+public class SectionedPurePursuit extends Controller {
     public Differential model;
 
-    public ArrayList<PathPoint> path;
+    public ArrayList<ArrayList<PathPoint>> sections;
     public double radius = 1.0;
 
     XYSeries points;
@@ -28,31 +28,33 @@ public class PurePursuit extends Controller {
 
     XYChart errorChart;
 
-    public PurePursuit() {
+    public SectionedPurePursuit() {
         model = new Differential();
-        path = new ArrayList<PathPoint>();
+        sections = new ArrayList<ArrayList<PathPoint>>();
         errorList.add(0.0);
         loopNum.add(0);
 
     }
 
-    public PurePursuit(ArrayList<PathPoint> path, double radius) {
+    public SectionedPurePursuit(ArrayList<ArrayList<PathPoint>> sections, double radius) {
         this();
-        this.path = path;
+        this.sections = sections;
         this.radius = radius;
     }
 
     @Override
     public void run() throws InterruptedException {
+        for (ArrayList<PathPoint> path : sections) {
 
-        while(Math.abs(model.model_x - path.get(path.size() - 1).x) + Math.abs(model.model_y - path.get(path.size() - 1).y) > radius) {
-            PathPoint followPoint = findFollowPoint(path);
+            while(Math.abs(model.model_x - path.get(path.size() - 1).x) + Math.abs(model.model_y - path.get(path.size() - 1).y) > radius) {
+                PathPoint followPoint = findFollowPoint(path);
 
-            goToGoal(followPoint.toPoint(), followPoint.speed);
+                goToGoal(followPoint.toPoint(), followPoint.speed);
 
-            super.run();
-            updateGraph();
+                updateGraph();
+            }
         }
+
     }
 
     public void initGraph() {
@@ -72,7 +74,7 @@ public class PurePursuit extends Controller {
         window = new SwingWrapper<XYChart>(charts);
         window.displayChartMatrix();
 
-        points = chart.addSeries("path points", PathPoint.toXList(path), PathPoint.toYList(path));
+        points = chart.addSeries("path points", generateXPath(sections), generateYPath(sections));
 
         points.setLineColor(XChartSeriesColors.GREEN);
         points.setLineStyle(SeriesLines.DASH_DASH);
@@ -150,4 +152,33 @@ public class PurePursuit extends Controller {
         model.run(vl, vr);
 
     }
+
+    public ArrayList<Double> generateXPath(ArrayList<ArrayList<PathPoint>> sections) {
+        ArrayList<Double> points = new ArrayList<Double>();
+
+        for (ArrayList<PathPoint> path : sections) {
+
+            for (PathPoint point : path) {
+                points.add(point.x);
+            }
+
+        }
+
+        return points;
+    }
+
+    public ArrayList<Double> generateYPath(ArrayList<ArrayList<PathPoint>> sections) {
+        ArrayList<Double> points = new ArrayList<Double>();
+
+        for (ArrayList<PathPoint> path : sections) {
+
+            for (PathPoint point : path) {
+                points.add(point.y);
+            }
+
+        }
+
+        return points;
+    }
+
 }

@@ -18,8 +18,6 @@ public abstract class Controller {
      */
     public void graph() {
         chart  = new XYChartBuilder().build();
-        window = new SwingWrapper<XYChart>(chart);
-        window.displayChart();
 
         chart.setTitle("Robot Position");
         chart.setXAxisTitle("X");

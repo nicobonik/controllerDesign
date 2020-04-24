@@ -17,8 +17,8 @@ public abstract class Model {
     public List<Double> thetaList = new ArrayList<Double>();
 
     public Model(){
-        xList.add(0.0);
-        yList.add(0.0);
+        xList.add(model_x);
+        yList.add(model_y);
     }
 
     public String toString() {

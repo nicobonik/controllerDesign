@@ -10,11 +10,15 @@ public class Frame {
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<PathPoint> path = new ArrayList<PathPoint>();
-        path.add(new PathPoint(0.0, 0.0, 1.0, 1.0, 1.0));
-        path.add(new PathPoint(3, 4, 1.0, 1.0, 1.0));
-        path.add(new PathPoint(6, 7, 1.0, 1.0, 1.5));
-        path.add(new PathPoint(8, 2, 1.0, 1.0, 1.5));
-        path.add(new PathPoint(4, -4, 1.0, 1.0, 1.0));
+        path.add(new PathPoint(0.0, 0.0, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(3, 4, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(6, 7, 0.5, 1.0, 0.5));
+        path.add(new PathPoint(8, 2, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(4, -4, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(0, -2, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(-2, 3, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(-4, 7, 1.0, 1.0, 0.5));
+        path.add(new PathPoint(-2, 9, 1.0, 1.0, 0.5));
 
         PurePursuit controller = new PurePursuit(path, 1.0);
 

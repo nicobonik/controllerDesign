@@ -1,5 +1,7 @@
 package space.anomaly.Controllers;
 
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -19,6 +21,8 @@ public class PurePursuit extends Controller {
 
     XYSeries points;
     XYSeries series;
+
+    XYChart errorChart;
 
     public PurePursuit() {
         model = new Differential();
@@ -46,6 +50,8 @@ public class PurePursuit extends Controller {
 
     public void initGraph() {
         super.graph();
+
+        errorChart = new XYChartBuilder().title("error chart").build();
 
         points = chart.addSeries("path points", PathPoint.toXList(path), PathPoint.toYList(path));
 

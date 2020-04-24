@@ -45,8 +45,8 @@ public class BoundingBox extends Controller {
         double errorLeft = calcDistanceBetweenTwoLines(model.wheelBase, model.model_theta, new Point(model.model_x, model.model_y), m1, b1, m2, b2);
         double errorRight = calcDistanceBetweenTwoLines(model.wheelBase * -1.0, model.model_theta, new Point(model.model_x, model.model_y), m1, b1, m2, b2);
 
-        left = -1.0 * errorLeft;
-        right = -1.0 * errorRight;
+        left = 1.0 * (1 - clip(errorLeft, -0.5, 0.5));
+        right = -1.0 * (1 + clip(errorRight, -0.5, 0.5));
 
         model.run(left, right);
 
@@ -76,7 +76,7 @@ public class BoundingBox extends Controller {
 
         double minError = Double.MAX_VALUE;
 
-        for (int i = 0; i < path.size(); i ++) {
+        for (int i = 0; i < path.size() - 1; i ++) {
             Point startLine = path.get(i);
             Point endLine = path.get(i + 1);
 

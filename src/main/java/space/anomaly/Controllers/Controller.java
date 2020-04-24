@@ -1,11 +1,13 @@
 package space.anomaly.Controllers;
 
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
 public abstract class Controller {
 
     XYChart chart;
+    SwingWrapper<XYChart> window;
 
     public Controller() {}
 
@@ -16,6 +18,9 @@ public abstract class Controller {
      */
     public void graph() {
         chart  = new XYChartBuilder().build();
+        window = new SwingWrapper<XYChart>(chart);
+        window.displayChart();
+
         chart.setTitle("Robot Position");
         chart.setXAxisTitle("X");
         chart.setYAxisTitle("Y");

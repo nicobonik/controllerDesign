@@ -1,7 +1,5 @@
 package space.anomaly.Controllers;
 
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -10,6 +8,9 @@ import space.anomaly.Models.Differential;
 
 public class DifferentialGoToGoal extends Controller {
     public Differential model;
+
+    XYSeries points;
+    XYSeries series;
 
     public double x = 0.0;
     public double y = 0.0;
@@ -38,25 +39,31 @@ public class DifferentialGoToGoal extends Controller {
         model.run(vl, vr);
 
         super.run();
+        updateGraph();
     }
 
     @Override
     public void graph() {
         super.graph();
 
-        XYSeries series = chart.addSeries("robot position", model.xList, model.yList);
+        series = chart.addSeries("robot position", model.xList, model.yList);
 
         series.setLineColor(XChartSeriesColors.BLUE);
         series.setLineStyle(SeriesLines.SOLID);
         series.setMarker(SeriesMarkers.NONE);
 
-        XYSeries points = chart.addSeries("path points", new double[] {0.0, x}, new double[] {0.0, y});
+        points = chart.addSeries("path points", new double[] {0.0, x, 8, 2, -3}, new double[] {0.0, y, 10, 4, -4});
 
         points.setLineColor(XChartSeriesColors.GREEN);
         points.setLineStyle(SeriesLines.DASH_DASH);
         points.setMarker(SeriesMarkers.DIAMOND);
 
-        new SwingWrapper<XYChart>(chart).displayChart();
+    }
 
+    public void updateGraph() {
+        chart.updateXYSeries("robot position", model.xList, model.yList, null);
+
+
+        window.repaintChart();
     }
 }

@@ -16,6 +16,11 @@ public class Point {
         this.y = y;
     }
 
+    public Point(Point p) {
+        this.x = p.x;
+        this.y = p.y;
+    }
+
     public static ArrayList<Double> toXList(ArrayList<Point> points) {
         ArrayList<Double> values = new ArrayList<Double>();
 
@@ -36,6 +41,11 @@ public class Point {
 
         return values;
 
+    }
+
+    public void setPoint(Point p) {
+        this.x = p.x;
+        this.y = p.y;
     }
 
 }

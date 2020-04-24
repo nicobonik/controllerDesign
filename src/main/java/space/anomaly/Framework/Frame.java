@@ -1,40 +1,32 @@
 package space.anomaly.Framework;
 
 import space.anomaly.Controllers.*;
+import space.anomaly.Math.Point;
+
+import java.util.ArrayList;
 
 public class Frame {
-    public static DifferentialGoToGoal controller = new DifferentialGoToGoal(4, 6);
 
     public static void main(String[] args) throws InterruptedException {
+        ArrayList<Point> path = new ArrayList<Point>();
+        path.add(new Point(0, 0));
+        path.add(new Point(1, 4));
+        path.add(new Point(2, 7));
+        path.add(new Point(3, 0));
+        path.add(new Point(4, -5));
+//        path.add(new Point(-3, 3));
 
-        controller.graph();
+        PurePursuit controller = new PurePursuit(path, 1.0);
 
-        System.out.println("initializing...");
-        Thread.sleep(2000);
-        System.out.println();
-
-        runController();
-        controller.x = 8;
-        controller.y = 10;
-        runController();
-        controller.x = 2;
-        controller.y = 4;
-        runController();
-        controller.x = -3;
-        controller.y = -4;
-        runController();
-
-        System.out.println();
-//        System.out.println("loop num: " + i);
-    }
-
-    public static void runController() throws InterruptedException {
+        controller.initGraph();
+        Thread.sleep(4000);
         int i = 0;
-        while(Math.abs((controller.model.model_x - controller.x)) + Math.abs((controller.model.model_y - controller.y)) > 0.1 && i < 9000){
+        while(i < 12000) {
             controller.run();
-
             i++;
         }
+
+//        System.out.println("loop num: " + i);
     }
 
 }

@@ -46,7 +46,7 @@ public class DifferentialGoToGoal extends Controller {
     public void graph() {
         super.graph();
 
-        series = chart.addSeries("robot position", model.xList, model.yList);
+        series = chart.addSeries("robot test", model.xList, model.yList);
 
         series.setLineColor(XChartSeriesColors.BLUE);
         series.setLineStyle(SeriesLines.SOLID);
@@ -61,7 +61,7 @@ public class DifferentialGoToGoal extends Controller {
     }
 
     public void updateGraph() {
-        chart.updateXYSeries("robot position", model.xList, model.yList, null);
+        chart.updateXYSeries("robot test", model.xList, model.yList, null);
 
 
         window.repaintChart();

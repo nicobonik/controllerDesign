@@ -5,6 +5,7 @@ public class PathPoint {
     public double y;
     public double speed;
     public double turnSpeed;
+    public double lookAhead;
 
     public PathPoint() {}
 

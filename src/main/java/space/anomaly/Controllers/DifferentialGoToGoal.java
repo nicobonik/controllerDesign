@@ -35,7 +35,6 @@ public class DifferentialGoToGoal extends Controller {
         vl = K * (1 + error);
         vr = K * (1 - error);
 
-
         model.run(vl, vr);
 
         super.run();

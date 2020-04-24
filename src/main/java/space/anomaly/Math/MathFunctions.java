@@ -20,7 +20,7 @@ public class MathFunctions {
 
     public static double angleWrap(double angle) {
 
-        while(angle < PI * -1.0) {
+        while(angle < -PI) {
             angle += 2.0 * PI;
         }
 

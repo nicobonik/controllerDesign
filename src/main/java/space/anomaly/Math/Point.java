@@ -43,6 +43,7 @@ public class Point {
 
     }
 
+
     public void setPoint(Point p) {
         this.x = p.x;
         this.y = p.y;

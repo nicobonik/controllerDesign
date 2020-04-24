@@ -5,6 +5,7 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 import space.anomaly.Math.MathFunctions;
+import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
 import space.anomaly.Models.Differential;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class PurePursuit extends Controller {
     public Differential model;
 
-    public ArrayList<Point> path;
+    public ArrayList<PathPoint> path;
     public double radius = 1.0;
 
     XYSeries points;
@@ -21,10 +22,10 @@ public class PurePursuit extends Controller {
 
     public PurePursuit() {
         model = new Differential();
-        path = new ArrayList<Point>();
+        path = new ArrayList<PathPoint>();
     }
 
-    public PurePursuit(ArrayList<Point> path, double radius) {
+    public PurePursuit(ArrayList<PathPoint> path, double radius) {
         this();
         this.path = path;
         this.radius = radius;
@@ -33,18 +34,20 @@ public class PurePursuit extends Controller {
     @Override
     public void run() throws InterruptedException {
 
-        Point followPoint = findFollowPoint(path, radius);
+        while(Math.abs(model.model_x - path.get(path.size() - 1).x) + Math.abs(model.model_y - path.get(path.size() - 1).y) > radius + 0.5) {
+            PathPoint followPoint = findFollowPoint(path);
 
-        goToGoal(followPoint, 1.0);
+            goToGoal(followPoint.toPoint(), followPoint.speed);
 
-        super.run();
-        updateGraph();
+            super.run();
+            updateGraph();
+        }
     }
 
     public void initGraph() {
         super.graph();
 
-        points = chart.addSeries("path points", Point.toXList(path), Point.toYList(path));
+        points = chart.addSeries("path points", PathPoint.toXList(path), PathPoint.toYList(path));
 
         points.setLineColor(XChartSeriesColors.GREEN);
         points.setLineStyle(SeriesLines.DASH_DASH);
@@ -64,16 +67,16 @@ public class PurePursuit extends Controller {
         window.repaintChart();
     }
 
-    public Point findFollowPoint(ArrayList<Point> path, double radius){
-        Point followPoint = new Point(path.get(0));
+    public PathPoint findFollowPoint(ArrayList<PathPoint> path){
+        PathPoint followPoint = new PathPoint(path.get(0));
 
         ArrayList<Point> circleIntersections;
 
         for (int i = 0; i < path.size() - 1; i++) {
-            Point startLine = path.get(i);
-            Point endLine = path.get(i + 1);
+            PathPoint startLine = path.get(i);
+            PathPoint endLine = path.get(i + 1);
 
-            circleIntersections = MathFunctions.lineCircleIntersect(startLine, endLine, radius, new Point(model.model_x, model.model_y));
+            circleIntersections = MathFunctions.lineCircleIntersect(startLine.toPoint(), endLine.toPoint(), startLine.lookAhead, new Point(model.model_x, model.model_y));
 
             double closestAngle = Double.MAX_VALUE;
 
@@ -95,7 +98,9 @@ public class PurePursuit extends Controller {
     public void goToGoal(Point goal, double speed) throws InterruptedException {
         double vl, vr;
         double K = 2.0;
-        double error = Math.atan2(goal.y - model.model_y, goal.x - model.model_x) - model.model_theta;
+        double angleToTarget = MathFunctions.angleWrap(Math.atan2(goal.y - model.model_y, goal.x - model.model_x) - model.model_theta);
+
+        double error = (angleToTarget / Math.PI) * speed;
 
         vl = K * (speed + error);
         vr = K * (speed - error);

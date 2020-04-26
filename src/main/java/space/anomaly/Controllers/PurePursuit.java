@@ -8,6 +8,7 @@ import space.anomaly.Math.MathFunctions;
 import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
 import space.anomaly.Models.Differential;
+import space.anomaly.Math.PID;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public class PurePursuit extends Controller {
     public Differential model;
+
+    public PID pidController = new PID(1.0, 1.0, 1.0);
 
     public ArrayList<PathPoint> path;
     public double radius = 1.0;
@@ -135,7 +138,7 @@ public class PurePursuit extends Controller {
 
     public void goToGoal(Point goal, double speed) throws InterruptedException {
         double vl, vr;
-        double K = 2.0;
+        double K = 1.0;
         double angleToTarget = MathFunctions.angleWrap(Math.atan2(goal.y - model.model_y, goal.x - model.model_x) - model.model_theta);
 
         double error = (angleToTarget / Math.PI) * speed;
@@ -143,8 +146,10 @@ public class PurePursuit extends Controller {
         errorList.add(error);
         loopNum.add(errorList.size());
 
-        vl = K * (speed + error);
-        vr = K * (speed - error);
+        double output = pidController.run(error, model.loopTime);
+
+        vl = K * (speed + output);
+        vr = K * (speed - output);
 
 
         model.run(vl, vr);

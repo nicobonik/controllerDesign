@@ -28,7 +28,7 @@ public class Differential extends Model {
         double w = (radius / wheelBase) * (left - right);
 
         v = clip(v, -1.0, 1.0);
-        w = clip(w, -2.0, 2.0);
+        w = clip(w, -1.0, 1.0);
 
         v *= (double) loopTime / 1000.0;
         w *= (double) loopTime / 1000.0;

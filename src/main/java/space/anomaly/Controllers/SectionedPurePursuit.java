@@ -16,6 +16,8 @@ import java.util.List;
 public class SectionedPurePursuit extends Controller {
     public Differential model;
 
+    public PID pid = new PID(10.0, 0, 0);
+
     public ArrayList<ArrayList<PathPoint>> sections;
     public double radius = 1.0;
 
@@ -103,8 +105,8 @@ public class SectionedPurePursuit extends Controller {
     }
 
     public void saveGraph() throws IOException {
-        BitmapEncoder.saveBitmapWithDPI(chart, "./pure_pursuit_model", BitmapEncoder.BitmapFormat.PNG, 300);
-        BitmapEncoder.saveBitmapWithDPI(errorChart, "./pure_pursuit_error", BitmapEncoder.BitmapFormat.PNG, 300);
+        BitmapEncoder.saveBitmapWithDPI(chart, "./pure_pursuit_1", BitmapEncoder.BitmapFormat.PNG, 300);
+        BitmapEncoder.saveBitmapWithDPI(errorChart, "./pure_pursuit_error1", BitmapEncoder.BitmapFormat.PNG, 300);
     }
 
     public PathPoint findFollowPoint(ArrayList<PathPoint> path){

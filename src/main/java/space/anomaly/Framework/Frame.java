@@ -19,11 +19,11 @@ public class Frame {
         path1.add(new PathPoint(4, -4, 1.0, 1.0, 0.5));
 
         ArrayList<PathPoint> path2 = new ArrayList<PathPoint>();
-        path1.add(new PathPoint(4, -4, 1.0, 1.0, 0.5));
-        path2.add(new PathPoint(0, -2, 1.0, 1.0, 0.5));
-        path2.add(new PathPoint(-2, 3, 1.0, 1.0, 0.5));
-        path2.add(new PathPoint(-4, 7, 1.0, 1.0, 0.5));
-        path2.add(new PathPoint(-2, 9, 1.0, 1.0, 0.5));
+        path1.add(new PathPoint(4, -4, 1.0, 1.0, 1));
+        path2.add(new PathPoint(2, 2, 1.0, 1.0, 1));
+        path2.add(new PathPoint(-2, 3, 1.0, 1.0, 1));
+        path2.add(new PathPoint(-4, 7, 1.0, 1.0, 1));
+        path2.add(new PathPoint(-2, 9, 1.0, 1.0, 1));
 
         sections.add(path1);
         sections.add(path2);

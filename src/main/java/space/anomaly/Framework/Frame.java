@@ -12,15 +12,15 @@ public class Frame {
     public static void main(String[] args) throws InterruptedException, IOException {
         ArrayList<ArrayList<PathPoint>> sections = new ArrayList<ArrayList<PathPoint>>();
         ArrayList<PathPoint> path1 = new ArrayList<PathPoint>();
-        path1.add(new PathPoint(0.0, 0.0, 1.0, 1.0, 0.5));
-        path1.add(new PathPoint(3, 4, 1.0, 1.0, 0.5));
-        path1.add(new PathPoint(6, 7, 0.5, 1.0, 0.5));
-        path1.add(new PathPoint(8, 2, 1.0, 1.0, 0.5));
-        path1.add(new PathPoint(4, -4, 1.0, 1.0, 0.5));
+        path1.add(new PathPoint(0.0, 0.0, 1.0, 1.0, 1));
+        path1.add(new PathPoint(3, 4, 1.0, 1.0, 1));
+        path1.add(new PathPoint(6, 7, 0.5, 1.0, 1));
+        path1.add(new PathPoint(8, 2, 1.0, 1.0, 1));
+        path1.add(new PathPoint(4, -4, 1.0, 1.0, 1));
 
         ArrayList<PathPoint> path2 = new ArrayList<PathPoint>();
         path1.add(new PathPoint(4, -4, 1.0, 1.0, 1));
-        path2.add(new PathPoint(2, 2, 1.0, 1.0, 1));
+        path2.add(new PathPoint(1, 6, 1.0, 1.0, 1));
         path2.add(new PathPoint(-2, 3, 1.0, 1.0, 1));
         path2.add(new PathPoint(-4, 7, 1.0, 1.0, 1));
         path2.add(new PathPoint(-2, 9, 1.0, 1.0, 1));

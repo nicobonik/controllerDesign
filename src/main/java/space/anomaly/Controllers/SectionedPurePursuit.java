@@ -5,6 +5,7 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 import space.anomaly.Math.MathFunctions;
+import space.anomaly.Math.PID;
 import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
 import space.anomaly.Models.Differential;
@@ -139,7 +140,7 @@ public class SectionedPurePursuit extends Controller {
 
     public void goToGoal(Point goal, double speed) throws InterruptedException {
         double vl, vr;
-        double K = 2.0;
+        double K = 1.0;
         double angleToTarget = MathFunctions.angleWrap(Math.atan2(goal.y - model.model_y, goal.x - model.model_x) - model.model_theta);
 
         double error = (angleToTarget / Math.PI) * speed;
@@ -147,8 +148,10 @@ public class SectionedPurePursuit extends Controller {
         errorList.add(error);
         loopNum.add(errorList.size());
 
-        vl = K * (speed + error);
-        vr = K * (speed - error);
+        double output = pid.run(error, model.loopTime);
+
+        vl = K * (speed + output);
+        vr = K * (speed - output);
 
 
         model.run(vl, vr);

@@ -4,6 +4,9 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
+/**
+ * Abstract class that holds default graphing options and some background run loop processes.
+ */
 public abstract class Controller {
 
     XYChart chart;

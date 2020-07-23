@@ -17,7 +17,7 @@ import java.util.List;
 public class SectionedPurePursuit extends Controller {
     public Differential model;
 
-    public PID pid = new PID(10.0, 0, 0);
+    public PID pid = new PID(10.0, 1.0, 1.0);
 
     public ArrayList<ArrayList<PathPoint>> sections;
     public double radius = 1.0;

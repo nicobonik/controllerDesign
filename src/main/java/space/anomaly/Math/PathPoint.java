@@ -28,6 +28,10 @@ public class PathPoint {
         this.lookAhead = lookAhead;
     }
 
+    public PathPoint(double x, double y, double speed, double turnSpeed) {
+        this(x, y, speed, turnSpeed, 0);
+    }
+
     public Point toPoint(){
         return new Point(this.x, this.y);
     }
@@ -35,6 +39,14 @@ public class PathPoint {
     public void setPoint(Point p) {
         this.x = p.x;
         this.y = p.y;
+    }
+
+    public void setPathPoint(PathPoint p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.speed = p.speed;
+        this.turnSpeed = p.turnSpeed;
+        this.lookAhead = p.lookAhead;
     }
 
     public static ArrayList<Double> toXList(ArrayList<PathPoint> points) {

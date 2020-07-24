@@ -68,7 +68,7 @@ public class GoToGoal extends Controller {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        GoToGoal controller = new GoToGoal(new PathPoint(1, 2, 0.4, 1, 0, Math.PI), 1, 1, 1);
+        GoToGoal controller = new GoToGoal(new PathPoint(1, 2, 0.5, 1, 0, Math.PI / 2.0), 1, 1, 1);
 
         controller.graph();
 

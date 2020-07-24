@@ -37,24 +37,13 @@ public class Mecanum extends Model {
         this.multiplier = multiplier;
     }
 
-    public void run(double w1, double w2, double w3, double w4) throws InterruptedException {
 
-
-        model_x += clip(((radius / 4.0) * (w1 + w2 + w3 + w4)) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);
-        model_y += clip((((radius / 4.0) * (w1 + w4)) + (((radius / 4.0) * -1.0) * (w2 + w3))) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);
-        model_theta += clip(((radius / 4.0) * ((w2 + w4 - w1 - w3) / (wheelBaseX + wheelbaseY))) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);
-
-        super.run();
-    }
 
     public void run(double x, double y, double w) throws InterruptedException {
 
-        double w1 = (1.0 / radius) * (x + y + (w * (-1.0 * (wheelBaseX + wheelbaseY))));
-        double w2 = (1.0 / radius) * (x - y + (w * (wheelBaseX + wheelbaseY)));
-        double w3 = (1.0 / radius) * (x - y + (w * (-1.0 * (wheelBaseX + wheelbaseY))));
-        double w4 = (1.0 / radius) * (x + y + (w * (wheelBaseX + wheelbaseY)));
-
-        run(w1, w2, w3, w4);
+        model_x += clip(x * (loopTime / 1000.0), -1.0, 1.0);
+        model_y += clip(y * (loopTime / 1000.0), -1.0, 1.0);
+        model_theta += clip(w * (loopTime / 1000.0), -2.0, 2.0);
 
         super.run();
     }

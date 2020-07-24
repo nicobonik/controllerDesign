@@ -39,6 +39,7 @@ public class Mecanum extends Model {
 
     public void run(double w1, double w2, double w3, double w4) throws InterruptedException {
 
+
         model_x += clip(((radius / 4.0) * (w1 + w2 + w3 + w4)) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);
         model_y += clip((((radius / 4.0) * (w1 + w4)) + (((radius / 4.0) * -1.0) * (w2 + w3))) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);
         model_theta += clip(((radius / 4.0) * ((w2 + w4 - w1 - w3) / (wheelBaseX + wheelbaseY))) * multiplier, -1.0, 1.0) * ((double) loopTime / 1000.0);

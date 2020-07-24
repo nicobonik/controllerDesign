@@ -1,16 +1,19 @@
 package space.anomaly.Controllers;
 
+import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+
+import java.io.IOException;
 
 /**
  * Abstract class that holds default graphing options and some background run loop processes.
  */
 public abstract class Controller {
 
-    XYChart chart;
-    SwingWrapper<XYChart> window;
+    protected XYChart chart;
+    protected SwingWrapper<XYChart> window;
 
     public Controller() {}
 
@@ -30,6 +33,11 @@ public abstract class Controller {
         chart.getStyler().setXAxisMin(-10.0);
         chart.getStyler().setXAxisMax(10.0);
 
+    }
+
+    public void saveGraph(String filename) throws IOException {
+        BitmapEncoder.saveBitmapWithDPI(chart, "./" + filename, BitmapEncoder.BitmapFormat.PNG, 300);
+        System.out.println("\nsaved graph");
     }
 
 }

@@ -1,23 +1,23 @@
 package space.anomaly.Controllers;
 
-import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
+
 import space.anomaly.Math.MathFunctions;
 import space.anomaly.Math.PID;
 import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
-import space.anomaly.Models.Differential;
+import space.anomaly.Models.Mecanum;
 
-import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class MoveTurnPrecise extends Controller {
-    public Differential model;
+public class MoveTurnMecanum extends Controller {
+    public Mecanum model;
 
     private PID turnPID = new PID(1.0, 1.0, 1.0);
     private PID movePID = new PID(1.0, 1.0, 1.0);
@@ -26,59 +26,51 @@ public class MoveTurnPrecise extends Controller {
     XYSeries points;
     XYSeries series;
 
-    public MoveTurnPrecise(ArrayList<PathPoint> path) {
-        model = new Differential();
+    public MoveTurnMecanum(ArrayList<PathPoint> path) {
+        model = new Mecanum();
         this.path = path;
     }
 
-    public MoveTurnPrecise(ArrayList<PathPoint> path, double radius, double wheelBase) {
-        model = new Differential(radius, wheelBase);
+    public MoveTurnMecanum(ArrayList<PathPoint> path, double radius, double wheelBaseX, double wheelBaseY) {
+        model = new Mecanum(radius, wheelBaseX, wheelBaseY, 1);
         this.path = path;
     }
 
     public void run() throws InterruptedException {
-        PathPoint lastPoint = new PathPoint(0, 0, 1, 1);
-
+        PathPoint lastPoint = new PathPoint();
         for (PathPoint point : path) {
-            System.out.println("\nturning!");
             turnToPoint(point);
-            System.out.println("\nmoving!");
             moveToPoint(point, lastPoint);
             lastPoint.setPathPoint(point);
             turnPID.reset();
             movePID.reset();
         }
-
-
     }
 
     public void turnToPoint(PathPoint point) throws InterruptedException {
-
         double relativeAngleToPoint = Double.MAX_VALUE;
         turnPID.Kp = point.turnSpeed * Math.signum(turnPID.Kp);
         while(Math.abs(relativeAngleToPoint) > 0.1) {
             double absoluteAngleToPoint = Math.atan2(point.y - model.model_y, point.x - model.model_x);
             relativeAngleToPoint = MathFunctions.angleWrap(absoluteAngleToPoint - model.model_theta);
             double output = turnPID.run(relativeAngleToPoint, model.loopTime);
-            model.run(output, -output);
+            model.run(0, 0, output);
             updateGraph();
         }
     }
 
     public void moveToPoint(PathPoint point, PathPoint lastPoint) throws InterruptedException {
-
         movePID.Kp = point.speed * Math.signum(movePID.Kp);
         while(Math.abs(model.model_x - point.x) > 0.1 && Math.abs(model.model_y - point.y) > 0.1) {
-           PathPoint follow = findFollowPoint(lastPoint, point);
+            PathPoint follow = findFollowPoint(lastPoint, point);
 
-           double absoluteAngleToPoint = Math.atan2(follow.y - model.model_y, follow.x - model.model_x);
-           double relativeAngleToPoint = MathFunctions.angleWrap(absoluteAngleToPoint - model.model_theta);
+            double absoluteAngleToPoint = Math.atan2(follow.y - model.model_y, follow.x - model.model_x);
+            double relativeAngleToPoint = MathFunctions.angleWrap(absoluteAngleToPoint - model.model_theta);
 
-           double output = movePID.run(relativeAngleToPoint, model.loopTime);
-           model.run(point.speed + output, point.speed - output);
-           updateGraph();
+            double output = movePID.run(relativeAngleToPoint, model.loopTime);
+            model.run(point.speed, point.speed, output);
+            updateGraph();
         }
-
     }
 
     public PathPoint findFollowPoint(PathPoint start, PathPoint end) {
@@ -101,17 +93,6 @@ public class MoveTurnPrecise extends Controller {
         return followPoint;
     }
 
-    //these are kinda useless rn
-    public double getRobotRelativeAngleToPoint(Point point) {
-        double absoluteAngleToPoint = Math.atan2(point.y - model.model_y, point.x - model.model_x);
-        return MathFunctions.angleWrap(model.model_theta - absoluteAngleToPoint);
-    }
-
-    public double getPointAbsoluteAngleToPoint(Point p1, Point p2) {
-        return MathFunctions.angleWrap(Math.atan2(p2.y - p1.y, p2.x - p1.x));
-    }
-
-
     public void graph() {
         super.graph();
         window = new SwingWrapper<XYChart>(chart);
@@ -129,41 +110,28 @@ public class MoveTurnPrecise extends Controller {
         series.setLineColor(XChartSeriesColors.BLUE);
         series.setLineStyle(SeriesLines.SOLID);
         series.setMarker(SeriesMarkers.NONE);
-
     }
 
     public void updateGraph() {
-
         chart.updateXYSeries("robot position", model.xList, model.yList, null);
         window.repaintChart();
-
     }
 
-    public void saveGraph() throws IOException {
-        saveGraph("move_turn_precise_model");
-    }
-
-    public void saveGraph(String filename) throws IOException {
-        BitmapEncoder.saveBitmapWithDPI(chart, "./" + filename, BitmapEncoder.BitmapFormat.PNG, 300);
-        System.out.println("\nsaved graph");
-    }
-
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException {
         ArrayList<PathPoint> path = new ArrayList<>();
-//        path.add(new PathPoint(0, 0, 1, 1));
-        path.add(new PathPoint(2, 2, 1, 1, 1));
-        path.add(new PathPoint(4, 8, 1, 1, 1));
-        path.add(new PathPoint(8, 0, 1, 1, 1));
-        path.add(new PathPoint(0, 8, 1, 1, 1));
+        path.add(new PathPoint(1, 1, 1, 1, 1));
+        path.add(new PathPoint(2, 4, 1, 1, 1));
+        path.add(new PathPoint(6, 2, 1, 1, 1));
+        path.add(new PathPoint(3, 3, 1, 1, 1));
 
-        MoveTurnPrecise controller = new MoveTurnPrecise(path, 5.0, 1.0);
+        MoveTurnMecanum controller = new MoveTurnMecanum(path, 1.0, 1.0, 1.0);
 
         controller.graph();
 
         controller.run();
 
-        controller.saveGraph("move_turn_precise_3");
 
     }
+
 
 }

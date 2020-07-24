@@ -8,6 +8,7 @@ public class PathPoint {
     public double speed;
     public double turnSpeed;
     public double lookAhead;
+    public double angle;
 
     public PathPoint() {}
 
@@ -17,6 +18,7 @@ public class PathPoint {
         this.speed = point.speed;
         this.turnSpeed = point.turnSpeed;
         this.lookAhead = point.lookAhead;
+        this.angle = point.angle;
 
     }
 
@@ -26,6 +28,15 @@ public class PathPoint {
         this.speed = speed;
         this.turnSpeed = turnSpeed;
         this.lookAhead = lookAhead;
+    }
+
+    public PathPoint(double x, double y, double speed, double turnSpeed, double lookAhead, double angle) {
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+        this.turnSpeed = turnSpeed;
+        this.lookAhead = lookAhead;
+        this.angle = angle;
     }
 
     public PathPoint(double x, double y, double speed, double turnSpeed) {
@@ -47,6 +58,7 @@ public class PathPoint {
         this.speed = p.speed;
         this.turnSpeed = p.turnSpeed;
         this.lookAhead = p.lookAhead;
+        this.angle = p.angle;
     }
 
     public static ArrayList<Double> toXList(ArrayList<PathPoint> points) {

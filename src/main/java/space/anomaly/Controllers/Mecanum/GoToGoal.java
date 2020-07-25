@@ -37,13 +37,19 @@ public class GoToGoal extends Controller {
     }
 
     public void goToGoal() throws InterruptedException {
+        double distanceToPoint = Math.hypot(point.x - model.model_x, point.y - model.model_y);
         double absoluteAngleToPoint = Math.atan2(point.y - model.model_y, point.x - model.model_x);
 
-        double robotAngleToPoint = MathFunctions.angleWrap(point.angle - model.model_theta);
+        double robotAngleToPoint = MathFunctions.angleWrap(absoluteAngleToPoint - model.model_theta);
 
-        double turnSpeed = robotAngleToPoint * point.turnSpeed;
+        double relativeXToPoint = Math.cos(robotAngleToPoint) * distanceToPoint;
+        double relativeYToPoint = Math.sin(robotAngleToPoint) * distanceToPoint;
 
-        model.run(Math.cos(absoluteAngleToPoint) * point.speed, Math.sin(absoluteAngleToPoint) * point.speed, turnSpeed);
+        double xSpeed = relativeXToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
+        double ySpeed = relativeYToPoint / (Math.abs(relativeXToPoint) + Math.abs(relativeYToPoint));
+        double turnSpeed = robotAngleToPoint - point.angle;
+
+        model.run(xSpeed * point.speed, ySpeed * point.speed, turnSpeed * point.speed);
 
     }
 
@@ -68,7 +74,7 @@ public class GoToGoal extends Controller {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        GoToGoal controller = new GoToGoal(new PathPoint(1, 2, 0.5, 1, 0, Math.PI / 2.0), 1, 1, 1);
+        GoToGoal controller = new GoToGoal(new PathPoint(1, 2, 0.5, 1, 0, 0), 1, 1, 1);
 
         controller.graph();
 

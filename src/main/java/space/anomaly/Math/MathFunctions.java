@@ -92,12 +92,31 @@ public class MathFunctions {
             double x1 = (-quadraticB + Math.sqrt(Math.pow(quadraticB, 2) - (4.0 * quadraticA * quadraticC))) / (2.0 * quadraticA);
             double y1 = (m * x1) + b;
 
-            intersections.add(new Point(x1, y1));
+            double minX = Math.min(linePoint1.x, linePoint2.x);
+            double maxX = Math.max(linePoint1.x, linePoint2.x);
+
+            if(linePoint2.x < linePoint1.x && linePoint2.y < linePoint1.y) {
+                if(x1 < maxX) {
+                    intersections.add(new Point(x1, y1));
+                }
+            } else {
+                if(x1 > minX) {
+                    intersections.add(new Point(x1, y1));
+                }
+            }
 
             double x2 = (-quadraticB - Math.sqrt(Math.pow(quadraticB, 2) - (4.0 * quadraticA * quadraticC))) / (2.0 * quadraticA);
             double y2 = (m * x2) + b;
 
-            intersections.add(new Point(x2, y2));
+            if(linePoint2.x < linePoint1.x && linePoint2.y < linePoint1.y) {
+                if(x2 < maxX) {
+                    intersections.add(new Point(x2, y2));
+                }
+            } else {
+                if(x2 > minX) {
+                    intersections.add(new Point(x2, y2));
+                }
+            }
 
         } catch (Exception ignored) {}
 

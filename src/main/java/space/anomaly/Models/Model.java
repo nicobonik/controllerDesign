@@ -40,17 +40,22 @@ public abstract class Model {
      */
     public List<Double> thetaList = new ArrayList<Double>();
 
+    private Message position = new Message("yeet");
+
     /**
      * Model constructor, adds a dummy value to all lists to avoid {@link NullPointerException} from being thrown
      */
     public Model(){
         xList.add(model_x);
         yList.add(model_y);
+        MessageHandler.initialize();
+        MessageHandler.addMessage(position);
+        MessageHandler.update();
     }
 
 
     public String toString() {
-        return "x: " + model_x + ", y: " + model_y + ", theta: " + model_theta;
+        return "x: " + round(model_x, 2) + ", y: " + round(model_y, 2) + ", theta: " + round(model_theta, 2);
     }
 
     /**
@@ -61,8 +66,9 @@ public abstract class Model {
         xList.add(model_x);
         yList.add(model_y);
         thetaList.add(model_theta);
-        MessageHandler.sendToConsole(new Message(this.toString()));
         Thread.sleep(loopTime);
+        position.setMessage(this.toString());
+        MessageHandler.update();
     }
 
     protected static double clip(double x, double min, double max) {
@@ -73,6 +79,11 @@ public abstract class Model {
         } else {
             return x;
         }
+    }
+
+    private static double round(double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
 }

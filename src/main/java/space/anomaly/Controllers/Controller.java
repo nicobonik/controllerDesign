@@ -5,6 +5,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**

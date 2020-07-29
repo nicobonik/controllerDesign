@@ -1,5 +1,8 @@
 package space.anomaly.Framework;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,34 +10,42 @@ public class MessageHandler {
 
     public static ArrayList<Message> messages = new ArrayList<Message>();
 
+    public static JFrame frame = new JFrame();
+    private static GridLayout layout;
 
-    public static void sendToConsole() {
-        Iterator<Message> iterator = messages.listIterator();
-        clearScreen();
-        while(iterator.hasNext()) {
-            Message message = iterator.next();
-            System.out.print("\r" + message.message);
-        }
-        messages.clear();
+    public static void initialize() {
+
+        layout = new GridLayout(messages.size(), 1, 0, 0);
+        frame.setSize(400, 400);
+        frame.setLayout(layout);
+        frame.setVisible(true);
     }
 
+    @Deprecated
     public static void sendToConsole(Message m) {
-        System.out.print("\r" + m.message);
+        System.out.print("\r" + m.getMessage());
     }
 
-    public static void runCommand() {}
-
-    public static void add(Message m) {
+    public static void addMessage(Message m) {
         messages.add(m);
     }
 
+    public static void update() {
+        layout.setRows(messages.size());
+        Component[] components = frame.getComponents();
+        for (Message message : messages) {
+            boolean isAdded = false;
+            for (Component component : components) {
+                if(message.getContainer().equals(component)) {
+                    isAdded = true;
+                }
+            }
+            if(!isAdded) {
+                frame.add(message.getContainer());
+            }
 
-    public static void clearScreen() {
-
-        System.out.print("\033[H\033[2J");
-
-        System.out.flush();
-
+            message.update();
+        }
     }
 
 }

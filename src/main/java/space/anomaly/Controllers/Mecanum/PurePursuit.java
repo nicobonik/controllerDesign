@@ -7,6 +7,8 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 import space.anomaly.Controllers.Controller;
+import space.anomaly.Framework.Message;
+import space.anomaly.Framework.MessageHandler;
 import space.anomaly.Math.MathFunctions;
 import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
@@ -21,6 +23,8 @@ public class PurePursuit extends Controller {
     public ArrayList<ArrayList<PathPoint>> sections;
     XYSeries points;
     XYSeries series;
+
+    PathPoint lastIntersection = new PathPoint();
 
     public PurePursuit(ArrayList<ArrayList<PathPoint>> sections) {
         this.sections = sections;
@@ -54,42 +58,45 @@ public class PurePursuit extends Controller {
 
             if(path.indexOf(end) == path.size() - 1) {
 
-                circleIntersections = MathFunctions.lineCircleIntersectNoBoundingBox(start.toPoint(), end.toPoint(), end.lookAhead, new Point(model.model_x, model.model_y));
+                circleIntersections = MathFunctions.lineCircleIntersectNoBoundingBox(start.toPoint(), end.toPoint(), start.lookAhead, new Point(model.model_x, model.model_y));
+
 
                 double closestAngle = Double.MAX_VALUE;
-                for(Point intersection : circleIntersections) {
+                for (Point intersection : circleIntersections) {
                     double angle = Math.atan2(intersection.y - model.model_y, intersection.x - model.model_x);
                     double relativePointAngle = Math.atan2(end.y - start.y, end.x - start.x);
                     double deltaAngle = Math.abs(MathFunctions.angleWrap(angle - relativePointAngle));
 
-                    if(deltaAngle < closestAngle) {
+                    if (deltaAngle < closestAngle) {
                         closestAngle = deltaAngle;
                         followPoint.setPathPoint(end);
                         followPoint.setPoint(intersection);
                     }
                 }
-
             } else {
 
                 circleIntersections = MathFunctions.lineCircleIntersect(start.toPoint(), end.toPoint(), end.lookAhead, new Point(model.model_x, model.model_y));
 
+//                System.out.println(circleIntersections.size());
+
                 double closestAngle = Double.MAX_VALUE;
-                for(Point intersection : circleIntersections) {
+                for (Point intersection : circleIntersections) {
                     double angle = Math.atan2(intersection.y - model.model_y, intersection.x - model.model_x);
                     double relativePointAngle = Math.atan2(end.y - start.y, end.x - start.x);
                     double deltaAngle = Math.abs(MathFunctions.angleWrap(angle - relativePointAngle));
 
-                    if(deltaAngle < closestAngle) {
+                    if (deltaAngle < closestAngle) {
                         closestAngle = deltaAngle;
                         followPoint.setPathPoint(end);
                         followPoint.setPoint(intersection);
                     }
                 }
+
             }
 
         }
-        System.out.println("\n" + followPoint.x +  ", " + followPoint.y);
-//
+
+        lastIntersection.setPathPoint(followPoint);
         return followPoint;
     }
 
@@ -162,18 +169,19 @@ public class PurePursuit extends Controller {
 
         ArrayList<ArrayList<PathPoint>> sections = new ArrayList<>();
         ArrayList<PathPoint> section1 = new ArrayList<>();
-        section1.add(new PathPoint(1, 1, 1, 1, 1, 0));
-        section1.add(new PathPoint(3, 2, 1, 1, 1, 0));
-        section1.add(new PathPoint(4, 6, 1, 1, 1, Math.PI));
-        section1.add(new PathPoint(7, 3, 1, 1, 1,  Math.PI / 2.0));
+        section1.add(new PathPoint(0, 0, 1, 1, 0.5, 0));
+        section1.add(new PathPoint(1, 1, 1, 1, 0.5, 0));
+        section1.add(new PathPoint(3, 2, 1, 1, 0.5, 0));
+        section1.add(new PathPoint(4, 6, 1, 1, 0.5, Math.PI));
+        section1.add(new PathPoint(7, 3, 1, 1, 0.5,  Math.PI / 2.0));
         section1.add(new PathPoint(9, -4, 1, 1, 1, 0));
 
         ArrayList<PathPoint> section2 = new ArrayList<>();
-        section2.add(new PathPoint(9, -4, 1, 1, 1, 0));
-        section2.add(new PathPoint(7, 3, 1, 1, 1, 0));
-        section2.add(new PathPoint(4, 6, 1, 1, 1, 0));
-        section2.add(new PathPoint(3, 2, 1, 1, 1, 0));
-        section2.add(new PathPoint(1, 1, 1, 1, 1, 0));
+        section2.add(new PathPoint(9, -4, 1, 1, 0.5, 0));
+        section2.add(new PathPoint(7, -2, 1, 1, 0.5, 0));
+        section2.add(new PathPoint(5, 0, 1, 1, 1, 0));
+        section2.add(new PathPoint(2, 2, 1, 1, 1, 0));
+        section2.add(new PathPoint(1, -4, 1, 1, 1, 0));
 
         sections.add(section1);
         sections.add(section2);

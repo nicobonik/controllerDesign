@@ -1,7 +1,11 @@
 package space.anomaly.Framework;
 
+import javax.swing.*;
+
 public class Message {
-     public String message;
+    private String message;
+
+    private JLabel container = new JLabel();
 
     public Message() {
 
@@ -52,5 +56,20 @@ public class Message {
                 val;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public JLabel getContainer() {
+        return container;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void update() {
+        container.setText(message);
+    }
 
 }

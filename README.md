@@ -20,10 +20,15 @@ It is essentially the "function" part of a closed loop system.<br>
 The `Controller` also handles all of the graphing. All you have to do to get that up and running is to look at the XChart Documentation and use an `XYSeries` that contains the model's `xList` and `yList`. 
 
 ### 3. Framework
-The Framework is nothing too special, it is a class where you can initialize your controller, as some controllers need entire paths as inputs, and that can take a lot of set up. 
+The Framework of this project contains the Debugger code, aka the `MessageHandler`. to add a `Message` to the Debugger, set up a new `Message` Object in your constructor or initialize method:
+<br>
+`Message m = new Message();`
+<br>
+Then, to change the message content, use the `setMessage()` function of the message, and the framework will take care of updating the swing UI for you. 
+<img src="https://latex.codecogs.com/png.latex?a+b%3Dc" />
 
 ## How To Use This library, effectively
 This library works best when the experimentation is being done on the `Controller`, and not the `Model`. Therefore it is probably best to derive a kinematic model elsewhere, then plug it into a `Model` so you can start designing controllers for it.
 
 ## Libraries used
-for the UI elements I used [XChart](https://github.com/knowm/XChart) because it was lightweight and fast and easy to integrate with my system. 
+for the UI elements I used [XChart](https://github.com/knowm/XChart) because it was lightweight and fast and easy to integrate with my system. XChart is a graphing utility based on the Java Swing library, which is also used sparingly in this project.

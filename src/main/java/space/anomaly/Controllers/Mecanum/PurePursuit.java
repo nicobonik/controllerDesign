@@ -14,6 +14,7 @@ import space.anomaly.Math.PathPoint;
 import space.anomaly.Math.Point;
 import space.anomaly.Models.Mecanum;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PurePursuit extends Controller {
@@ -58,7 +59,7 @@ public class PurePursuit extends Controller {
 
             if(path.indexOf(end) == path.size() - 1) {
 
-                circleIntersections = MathFunctions.lineCircleIntersectNoBoundingBox(start.toPoint(), end.toPoint(), start.lookAhead, new Point(model.model_x, model.model_y));
+                circleIntersections = MathFunctions.lineCircleIntersectNoBoundingBox(start.toPoint(), end.toPoint(), end.lookAhead, new Point(model.model_x, model.model_y));
 
 
                 double closestAngle = Double.MAX_VALUE;
@@ -75,7 +76,7 @@ public class PurePursuit extends Controller {
                 }
             } else {
 
-                circleIntersections = MathFunctions.lineCircleIntersect(start.toPoint(), end.toPoint(), end.lookAhead, new Point(model.model_x, model.model_y));
+                circleIntersections = MathFunctions.lineCircleIntersect(start.toPoint(), end.toPoint(), end.lookAhead, new Point(model.model_x, model.model_y), false, true);
 
 //                System.out.println(circleIntersections.size());
 
@@ -165,23 +166,23 @@ public class PurePursuit extends Controller {
         return points;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         ArrayList<ArrayList<PathPoint>> sections = new ArrayList<>();
         ArrayList<PathPoint> section1 = new ArrayList<>();
-        section1.add(new PathPoint(0, 0, 1, 1, 0.5, 0));
-        section1.add(new PathPoint(1, 1, 1, 1, 0.5, 0));
+        section1.add(new PathPoint(0, 0, 1, 1, 1, 0));
+        section1.add(new PathPoint(1, 1, 1, 1, 0.1, 0));
         section1.add(new PathPoint(3, 2, 1, 1, 0.5, 0));
         section1.add(new PathPoint(4, 6, 1, 1, 0.5, Math.PI));
-        section1.add(new PathPoint(7, 3, 1, 1, 0.5,  Math.PI / 2.0));
+        section1.add(new PathPoint(7, 3, 1, 1, 1,  Math.PI / 2.0));
         section1.add(new PathPoint(9, -4, 1, 1, 1, 0));
 
         ArrayList<PathPoint> section2 = new ArrayList<>();
         section2.add(new PathPoint(9, -4, 1, 1, 0.5, 0));
         section2.add(new PathPoint(7, -2, 1, 1, 0.5, 0));
         section2.add(new PathPoint(5, 0, 1, 1, 1, 0));
-        section2.add(new PathPoint(2, 2, 1, 1, 1, 0));
-        section2.add(new PathPoint(1, -4, 1, 1, 1, 0));
+        section2.add(new PathPoint(-2, -2, 1, 1, 1, 0));
+        section2.add(new PathPoint(3, 4, 1, 1, 0.2, 0));
 
         sections.add(section1);
         sections.add(section2);
@@ -190,5 +191,7 @@ public class PurePursuit extends Controller {
 
         controller.graph();
         controller.run();
+
+        controller.saveGraph("pure_pursuit_mecanum_final");
     }
 }

@@ -22,10 +22,9 @@ public class PurePursuit extends Controller {
     public Mecanum model;
 
     public ArrayList<ArrayList<PathPoint>> sections;
+
     XYSeries points;
     XYSeries series;
-
-    PathPoint lastIntersection = new PathPoint();
 
     public PurePursuit(ArrayList<ArrayList<PathPoint>> sections) {
         this.sections = sections;
@@ -97,7 +96,6 @@ public class PurePursuit extends Controller {
 
         }
 
-        lastIntersection.setPathPoint(followPoint);
         return followPoint;
     }
 
